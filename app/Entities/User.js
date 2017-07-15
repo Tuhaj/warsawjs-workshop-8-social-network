@@ -1,10 +1,13 @@
 'use strict';
 
-class User {
-  constructor() {
+const esdf = require('esdf');
+
+class User extends esdf.core.EventSourcedAggregate {
+  constructor() { // should be empty list of args
+    super();
     this.name = null;
     this.email = null;
-    this.registered = false;
+    this._registered = false;
   }
 
   getName() {
@@ -12,13 +15,14 @@ class User {
   }
 
   register({ name, email }) {
+    // this._stageEvent(new esdf.core.Event('Registered', {}));
     this.name = name;
     this.email = email;
-    this.registered = true;
+    this._registered = true;
   }
 
   isRegistered() {
-    return this.registered
+    return this._registered
   }
 }
 
