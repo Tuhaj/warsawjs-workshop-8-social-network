@@ -20,4 +20,6 @@ app.runModules(modules).done(async function({ streamer, subscriber, services }) 
   })
   const registerUser = services.service('registerUser');
   registerUser({ userID: 'uuid42', name: 'Standard esdf usr', email: 'InventTheFutureWithThePast@gmail.com', password: 'dupa.8'});
+  const postMessage = services.service('postMessage');
+  postMessage({ body: 'hello!', title: 'World!', id: 'someid1213!', userID: 'uuid42'})
 });

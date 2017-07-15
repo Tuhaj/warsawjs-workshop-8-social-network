@@ -1,6 +1,7 @@
 'use strict';
 
 const registerUser = require('../Services/registerUser');
+const postMessage = require('../Services/postMessage');
 const esdf = require('esdf');
 
 // this.requires('authDB');
@@ -13,6 +14,7 @@ module.exports = function() {
     // serviceContainer.addResource('authDB', authDB);
 
     serviceContainer.addService('registerUser', registerUser);
+    serviceContainer.addService('postMessage', postMessage);
     // Object.keys(serviceFunctions).forEach(function(serviceName) {
     // })
     return serviceContainer;

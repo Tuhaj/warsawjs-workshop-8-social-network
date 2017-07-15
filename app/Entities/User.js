@@ -10,10 +10,18 @@ class User extends esdf.core.EventSourcedAggregate {
     this._email = null;
     this._password = null;
     this._registered = false;
+    this._messages = [];
   }
 
   getName() {
     return this._name;
+  }
+
+  postMessage(body, title, id) {
+    if(this._messages.includes(id)) {
+      return;
+    }
+    this._stageEvent(new esdf.core.Event('MessagePosted', {body, title, id}));
   }
 
   async getPasswordHash(password) {
@@ -31,6 +39,11 @@ class User extends esdf.core.EventSourcedAggregate {
   onRegistered(event) {
     this._registered = true;
     this._name = event.eventPayload.name;
+  }
+
+  onMessagePosted(event) {
+    console.log("posted!");
+    this._messages.push(event.eventPayload.id);
   }
 
   isRegistered() {

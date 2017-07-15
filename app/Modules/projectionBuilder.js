@@ -9,6 +9,13 @@ const eventHandlers = {
       email: event.eventPayload.email,
       encryptedPassword: event.eventPayload.encryptedPassword
     })
+  },
+  'User.MessagePosted': function(db, event, commit) {
+    db.ref(`/messages/${commit.sequenceID}`).update({
+      ID: commit.sequenceID,
+      body: event.eventPayload.body,
+      title: event.eventPayload.title
+    })
   }
 }
 
