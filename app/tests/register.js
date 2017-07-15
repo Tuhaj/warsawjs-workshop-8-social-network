@@ -18,5 +18,14 @@ describe('User', function() {
       assert.equal(user.getName(), 'Piotr');
       console.log(user.getStagedEvents());
     })
+
+    it('should not registered again the same user', function() {
+      const user = new User();
+      user.register({ name: 'Piotr', email: '314zientara@gmail.com'});
+      let eventsCountBefore = user.getStagedEvents().length;
+      user.register({ name: 'Piotr', email: '314zientara@gmail.com'});
+      let eventsCountAfter = user.getStagedEvents().length;
+      assert.equal(eventsCountBefore, eventsCountAfter);
+    })
   })
 });

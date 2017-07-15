@@ -15,6 +15,9 @@ class User extends esdf.core.EventSourcedAggregate {
   }
 
   register({ name, email }) {
+    if(this._registered) {
+      return;
+    }
     this._stageEvent(new esdf.core.Event('Registered', {name, email}));
   }
 
