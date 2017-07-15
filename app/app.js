@@ -7,10 +7,13 @@ const modules = [
 
 const CompositionManager = require('app-compositor').CompositionManager;
 const app = new CompositionManager();
-app.runModules(modules).done(function({ repository }) {
+app.runModules(modules).done(async function({ repository }) {
   const User = require('./Entities/User');
-  repository.invoke(User, 'uuidv4', async function(user) {
+  await repository.invoke(User, 'uuidv4', async function(user) {
     await user.register({ name: 'Piotr', email: '314zientara@gmail.com', password: 'dupa.8'});
     console.log("is Registered: %s", user.isRegistered());
+  });
+  repository.invoke(User, 'uuidv4', async function(user) {
+    console.log("is still Registered: %s", user.isRegistered());
   });
 });
