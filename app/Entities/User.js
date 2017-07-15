@@ -1,12 +1,14 @@
 'use strict';
 
 const esdf = require('esdf');
+const bcrypt = require('bcrypt');
 
 class User extends esdf.core.EventSourcedAggregate {
   constructor() { // should be empty list of args
     super();
     this._name = null;
     this._email = null;
+    this._password = null;
     this._registered = false;
   }
 
@@ -14,11 +16,16 @@ class User extends esdf.core.EventSourcedAggregate {
     return this._name;
   }
 
-  register({ name, email }) {
+  async getPasswordHash(password) {
+    return await bcrypt.hash(password, 5)
+  }
+
+  async register({ name, email, password }) {
     if(this._registered) {
       return;
     }
-    this._stageEvent(new esdf.core.Event('Registered', {name, email}));
+    const encryptedPassword = await this.getPasswordHash(password);
+    this._stageEvent(new esdf.core.Event('Registered', {name, email, encryptedPassword}));
   }
 
   onRegistered(event) {

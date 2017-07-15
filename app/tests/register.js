@@ -11,19 +11,19 @@ describe('User', function() {
     })
   });
   describe('#register', function() {
-    it('should make the user registered', function() {
+    it('should make the user registered', async function() {
       const user = new User();
-      user.register({ name: 'Piotr', email: '314zientara@gmail.com'})
+      await user.register({ name: 'Piotr', email: '314zientara@gmail.com', password: 'dupa.8'})
       assert.equal(user.isRegistered(), true);
       assert.equal(user.getName(), 'Piotr');
       console.log(user.getStagedEvents());
     })
 
-    it('should not registered again the same user', function() {
+    it('should not registered again the same user', async function() {
       const user = new User();
-      user.register({ name: 'Piotr', email: '314zientara@gmail.com'});
+      await user.register({ name: 'Piotr', email: '314zientara@gmail.com', password: 'dupa.8'});
       let eventsCountBefore = user.getStagedEvents().length;
-      user.register({ name: 'Piotr', email: '314zientara@gmail.com'});
+      await user.register({ name: 'Piotr', email: '314zientara@gmail.com', password: 'dupa.8'});
       let eventsCountAfter = user.getStagedEvents().length;
       assert.equal(eventsCountBefore, eventsCountAfter);
     })
