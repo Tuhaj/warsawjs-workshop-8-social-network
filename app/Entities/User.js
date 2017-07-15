@@ -5,20 +5,22 @@ const esdf = require('esdf');
 class User extends esdf.core.EventSourcedAggregate {
   constructor() { // should be empty list of args
     super();
-    this.name = null;
-    this.email = null;
+    this._name = null;
+    this._email = null;
     this._registered = false;
   }
 
   getName() {
-    return this.name;
+    return this._name;
   }
 
   register({ name, email }) {
-    // this._stageEvent(new esdf.core.Event('Registered', {}));
-    this.name = name;
-    this.email = email;
+    this._stageEvent(new esdf.core.Event('Registered', {name, email}));
+  }
+
+  onRegistered(event) {
     this._registered = true;
+    this._name = event.eventPayload.name;
   }
 
   isRegistered() {

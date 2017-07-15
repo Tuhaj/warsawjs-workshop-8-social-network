@@ -16,6 +16,7 @@ describe('User', function() {
       user.register({ name: 'Piotr', email: '314zientara@gmail.com'})
       assert.equal(user.isRegistered(), true);
       assert.equal(user.getName(), 'Piotr');
+      console.log(user.getStagedEvents());
     })
   })
 });
